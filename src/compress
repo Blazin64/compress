@@ -52,8 +52,8 @@ def test_compress(path):
     result = subprocess.check_output(["lsattr", path]).strip()
     if (result == ''):
         raise Exception('lsattr returned nothing')
-    result = result[:result.index(" ")]
-    for f in result:
+    result = result[:result.index(b' ')]
+    for f in result.decode():
         if (f == 'c'):
             return True
     return False
