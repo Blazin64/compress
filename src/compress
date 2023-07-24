@@ -92,7 +92,7 @@ def compress_file(filepath, decompress = False):
     n = filepath + get_rh()
     if (target_exists(n)):
         raise Exception(n + " already exists")
-    rc = subprocess.call(["cp", "--preserve=mode,ownership,timestamps,xattr", filepath, n])
+    rc = subprocess.call(["cp", "--reflink=never", "--preserve=mode,ownership,timestamps,xattr", filepath, n])
     if (rc != 0):
         error_log("Unable to copy " + filepath + " to " + n)
         sys.exit(80)
@@ -132,7 +132,7 @@ def compress_folder(path):
             if (target_exists(n)):
                 raise Exception(n + " already exists")
             # preserve file flags
-            rc = subprocess.call(["cp", "-p", p, n])
+            rc = subprocess.call(["cp", "--reflink=never", "-p", p, n])
             if (rc != 0):
                 error_log("Unable to copy " + p + " to " + n)
                 sys.exit(80)
